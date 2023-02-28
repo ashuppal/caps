@@ -13,7 +13,7 @@ module.exports = (companyName) => {
     customer: chance.name(),
     address: chance.address(),
   };
-  console.log('vendor handler called')
+  console.log('Vendor: thank you for picking up my package');
   eventPool.emit('pickup', payload);
 
 };
