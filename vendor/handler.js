@@ -1,19 +1,19 @@
 'use strict';
 
-const eventPool = require('../eventPool');
+const {io} = require ('socket.io-client');
 
-var Chance = require('chance');
-var chance = new Chance();
+const socket = io.connect ('http://localhost:3003/caps');
 
-module.exports = (companyName) => {
-  
+let Chance = require ('chance');
+let chance = new Chance ();
+
+module.exports = companyName => {
   const payload = {
     companyName: companyName,
-    orderID: chance.guid(),
-    customer: chance.name(),
-    address: chance.address(),
+    orderID: chance.guid (),
+    customer: chance.name (),
+    address: chance.address (),
   };
-  console.log('Vendor: thank you for picking up my package');
-  eventPool.emit('pickup', payload);
-
+  console.log ('Vendor: thank you for picking up my package');
+  socket.emit ('pickup', payload);
 };
