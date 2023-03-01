@@ -1,11 +1,14 @@
 # caps
-
+socket.io
 Author : Ashwini Uppal
 
-## Description
+## overview
 
-
-Our goal is to setup a pool of events and handler functions, with the intent being to refactor parts of the system throughout the week, but keep the handlers themselves largely the same. 
+The Socket Server will create a namespace of caps that will receive all CAPS event traffic.
+Each Vendor and Driver Client will connect to the caps namespace.
+The server will emit specific events to each socket that is listening for their designated events from the Global Event Pool defined in the Server.
+Each Vendor will only emit and listen for specific events based on their Vendor ID. This will be managed by rooms within Socket.io.
+Each Driver will “pick up” a package when the vendor notifies the Server that an “order” is ready and simulate “in-transit” and “delivered” events.
 
 ## User stories
 
@@ -20,6 +23,13 @@ And as developers, here are some of the development stories that are relevant to
 
 As a developer, I want to use industry standards for managing the state of each package.
 As a developer, I want to create an event driven system so that I can write code that happens in response to events, in real time.
+
+
+## test
+
+* `npm test vendorHandler.test.js`
+* `npm test driverHandler.test.js`
+
 
 ### UML
 
