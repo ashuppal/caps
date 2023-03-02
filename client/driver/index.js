@@ -6,6 +6,8 @@ const handler = require('./handler');
 
 const socket = io.connect('http://localhost:3003/caps');
 
+socket.emit('getAll', {queueId: 'DRIVER'});
+
 socket.on('pickup', (payload) => {
   setTimeout(() => {
     handler(payload);

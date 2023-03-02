@@ -3,14 +3,19 @@
 const handler = require ('./handler');
 
 const {io} = require ('socket.io-client');
+const { generateOrder, packageDeliver } = require('../flower-vendor/handler');
 
 const socket = io.connect ('http://localhost:3003/caps');
 
+socket.emit('getAll', {store: '1800-flowers'});
 
-socket.on('VENDOR', (companyName) => {
-  setTimeout(() => {
-    handler(companyName);
-  }, 1000);
+setInterval (() => {
+  generateOrder (socket);
+}, 5000);
+
+socket.on ('delivered', payload => {
+  packageDeliver (payload);
+  socket.emit ('received', payload);
 });
 
 

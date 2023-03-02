@@ -1,10 +1,15 @@
 'use strict';
 
-const eventPool = require ('../eventPool');
+const socket = require ('../../socket');
+// const eventPool = require ('../eventPool');
 const handler = require ('./handler');
-jest.mock ('../eventPool', () => {
+
+const { packageDelivered, generateOrder } = require('./handler');
+
+jest.mock('../socket.js', () => {
   return {
-    emit: jest.fn (),
+    on: jest.fn(),
+    emit: jest.fn(),
   };
 });
 console.log = jest.fn ();
@@ -18,7 +23,6 @@ describe ('Vendor handler', () => {
       address: 'Seattle',
     };
     handler (payload);
-    expect (eventPool.emit).toHaveBeenCalledWith ('in-transit', payload);
+    expect (socket.emit).toHaveBeenCalledWith ('in-transit', payload);
   });
 });
-
